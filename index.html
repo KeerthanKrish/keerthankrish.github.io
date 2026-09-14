@@ -28,7 +28,18 @@
   </div>
   <script src="boot.js"></script>
 
-  <div id="custom-cursor" class="custom-cursor" aria-hidden="true"></div>
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
+    <svg viewBox="0 0 6 8" shape-rendering="crispEdges">
+      <rect x="0" y="0" width="1" height="1" fill="currentColor" />
+      <rect x="0" y="1" width="2" height="1" fill="currentColor" />
+      <rect x="0" y="2" width="3" height="1" fill="currentColor" />
+      <rect x="0" y="3" width="4" height="1" fill="currentColor" />
+      <rect x="0" y="4" width="5" height="1" fill="currentColor" />
+      <rect x="0" y="5" width="6" height="1" fill="currentColor" />
+      <rect x="0" y="6" width="3" height="1" fill="currentColor" />
+      <rect x="0" y="7" width="2" height="1" fill="currentColor" />
+    </svg>
+  </div>
 
   <canvas id="bg-canvas"></canvas>
 
@@ -65,10 +76,10 @@
           <span class="term-dot red"></span>
           <span class="term-dot yellow"></span>
           <span class="term-dot green"></span>
-          <span class="term-title">guest@portfolio: ~</span>
+          <span class="term-title">user@portfolio: ~</span>
         </div>
         <div class="term-body">
-          <p class="hero-line"><span class="prompt">guest@portfolio</span><span class="prompt-path">:~$</span> <span class="cmd">whoami</span></p>
+          <p class="hero-line"><span class="prompt">user@portfolio</span><span class="prompt-path">:~$</span> <span class="cmd">whoami</span></p>
           <p class="hero-name">Keerthan Krish</p>
           <p class="hero-role">&gt; <span id="hero-role-text"></span><span class="cursor"></span></p>
           <p class="hero-tagline">
@@ -260,10 +271,10 @@
           <span class="term-dot red"></span>
           <span class="term-dot yellow"></span>
           <span class="term-dot green"></span>
-          <span class="term-title">guest@portfolio: ~/contact</span>
+          <span class="term-title">user@portfolio: ~/contact</span>
         </div>
         <div class="term-body">
-          <p class="hero-line"><span class="prompt">guest@portfolio</span><span class="prompt-path">:~$</span> <span class="cmd">cat contact.json</span></p>
+          <p class="hero-line"><span class="prompt">user@portfolio</span><span class="prompt-path">:~$</span> <span class="cmd">cat contact.json</span></p>
           <ul class="contact-list">
             <!-- TODO: replace with your real contact details -->
             <li><span class="key">"email"</span>: <span class="val"><a href="mailto:keerthankkrish@gmail.com">keerthankkrish@gmail.com</a></span></li>
@@ -278,7 +289,7 @@
   <footer>
     <div class="wrap">
       <p>&copy; <span id="year"></span> Keerthan Krish. Built with HTML, CSS &amp; JS — hosted on GitHub Pages.</p>
-      <p class="build-version">build v5</p>
+      <p class="build-version">build v6</p>
     </div>
   </footer>
 
