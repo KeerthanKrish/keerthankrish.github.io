@@ -213,3 +213,38 @@ if (supportsFinePointer && cursor) {
 
   requestAnimationFrame(frame);
 }
+
+// Click pixel-burst
+if (!reduceMotionQuery.matches) {
+  const BURST_COUNT = 14;
+  const BURST_COLORS = ['var(--accent)', 'var(--accent-2)'];
+  const burstSkipSelector = 'a, button';
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest(burstSkipSelector)) return;
+
+    const originX = e.clientX;
+    const originY = e.clientY;
+
+    for (let i = 0; i < BURST_COUNT; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'click-burst-particle';
+      particle.style.left = `${originX}px`;
+      particle.style.top = `${originY}px`;
+      particle.style.background = BURST_COLORS[i % BURST_COLORS.length];
+      document.body.appendChild(particle);
+
+      const angle = (Math.PI * 2 * i) / BURST_COUNT + (Math.random() - 0.5) * 0.4;
+      const distance = 26 + Math.random() * 40;
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+
+      requestAnimationFrame(() => {
+        particle.style.transform = `translate(${dx}px, ${dy}px) scale(0.2)`;
+        particle.style.opacity = '0';
+      });
+
+      setTimeout(() => particle.remove(), 550);
+    }
+  });
+}
