@@ -75,18 +75,16 @@ if (themeToggle) {
 // Card tilt-on-hover
 const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-if (!reduceMotionQuery.matches) {
-  const TILT_MAX = 7;
-
-  document.querySelectorAll('.term').forEach((card) => {
+function attachTilt(cards, maxDeg) {
+  cards.forEach((card) => {
     let frame = null;
 
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = (e.clientY - rect.top) / rect.height;
-      const rotateY = (x - 0.5) * TILT_MAX * 2;
-      const rotateX = (0.5 - y) * TILT_MAX * 2;
+      const rotateY = (x - 0.5) * maxDeg * 2;
+      const rotateX = (0.5 - y) * maxDeg * 2;
 
       if (frame) cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
@@ -99,4 +97,9 @@ if (!reduceMotionQuery.matches) {
       card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
     });
   });
+}
+
+if (!reduceMotionQuery.matches) {
+  attachTilt(document.querySelectorAll('.term'), 11);
+  attachTilt(document.querySelectorAll('.stat'), 7);
 }

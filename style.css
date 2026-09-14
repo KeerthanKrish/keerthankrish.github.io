@@ -61,7 +61,6 @@ body,
 .nav,
 .badge,
 .tag,
-.stat,
 .btn {
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -285,7 +284,7 @@ h2.section-title .muted {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 20px 60px -20px var(--shadow-color);
+  box-shadow: 0 20px 60px -20px var(--shadow-color), 0 0 26px -6px rgba(var(--accent-rgb), 0.18);
   transform: perspective(900px) rotateX(0deg) rotateY(0deg);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
     transform 0.15s ease-out, box-shadow 0.15s ease-out;
@@ -463,6 +462,11 @@ h2.section-title .muted {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 14px 16px;
+  box-shadow: 0 0 20px -6px rgba(var(--accent-rgb), 0.16);
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  will-change: transform;
 }
 
 .stat .num {
