@@ -113,23 +113,14 @@ if (supportsFinePointer && cursor) {
 
   const skipMotion = reduceMotionQuery.matches;
   const POS_EASE = skipMotion ? 1 : 0.25;
-  const ROT_EASE = skipMotion ? 1 : 0.18;
-  const MOVE_THRESHOLD = 0.4;
 
   let shown = false;
   let tx = window.innerWidth / 2;
   let ty = window.innerHeight / 2;
   let cx = tx;
   let cy = ty;
-  let angle = 0;
-  let targetAngle = 0;
 
   const interactiveSelector = 'a, button';
-
-  function lerpAngle(a, b, t) {
-    const diff = (((b - a + 180) % 360) + 360) % 360 - 180;
-    return a + diff * t;
-  }
 
   window.addEventListener('mousemove', (e) => {
     tx = e.clientX;
@@ -160,19 +151,47 @@ if (supportsFinePointer && cursor) {
     }
   });
 
-  function frame() {
-    const dx = tx - cx;
-    const dy = ty - cy;
-    cx += dx * POS_EASE;
-    cy += dy * POS_EASE;
+  // Trailing pixel dots
+  const trailEl = document.getElementById('cursor-trail');
+  const TRAIL_LENGTH = skipMotion ? 0 : 8;
+  const trailHistory = [];
+  const trailDots = [];
 
-    const speed = Math.hypot(dx, dy);
-    targetAngle = speed > MOVE_THRESHOLD ? Math.atan2(dy, dx) * (180 / Math.PI) + 135 : 0;
-    angle = lerpAngle(angle, targetAngle, ROT_EASE);
+  if (trailEl && TRAIL_LENGTH > 0) {
+    for (let i = 0; i < TRAIL_LENGTH; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'cursor-trail-dot';
+      dot.style.opacity = '0';
+      trailEl.appendChild(dot);
+      trailDots.push(dot);
+    }
+  }
+
+  function frame() {
+    cx += (tx - cx) * POS_EASE;
+    cy += (ty - cy) * POS_EASE;
 
     if (shown) {
-      cursor.style.transform = `translate(${cx}px, ${cy}px) rotate(${angle}deg)`;
+      cursor.style.transform = `translate(${cx}px, ${cy}px)`;
+
+      if (TRAIL_LENGTH > 0) {
+        trailHistory.unshift({ x: cx, y: cy });
+        if (trailHistory.length > TRAIL_LENGTH) trailHistory.length = TRAIL_LENGTH;
+
+        trailDots.forEach((dot, i) => {
+          const point = trailHistory[i];
+          if (point) {
+            dot.style.transform = `translate(${point.x}px, ${point.y}px)`;
+            dot.style.opacity = String((1 - i / TRAIL_LENGTH) * 0.5);
+          } else {
+            dot.style.opacity = '0';
+          }
+        });
+      }
+    } else if (TRAIL_LENGTH > 0) {
+      trailDots.forEach((dot) => { dot.style.opacity = '0'; });
     }
+
     requestAnimationFrame(frame);
   }
 

@@ -241,6 +241,23 @@ a:hover {
   display: block;
 }
 
+.cursor-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.cursor-trail-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0;
+}
+
 :root.custom-cursor-active,
 :root.custom-cursor-active * {
   cursor: none !important;
