@@ -13,11 +13,13 @@
 
   let accent = '57, 255, 157';
   let accent2 = '124, 92, 255';
+  let alphaMult = 1;
 
   function readThemeColors() {
     const styles = getComputedStyle(document.documentElement);
     accent = styles.getPropertyValue('--accent-rgb').trim() || accent;
     accent2 = styles.getPropertyValue('--accent-2-rgb').trim() || accent2;
+    alphaMult = parseFloat(styles.getPropertyValue('--particle-alpha-mult')) || 1;
   }
 
   function resize() {
@@ -58,7 +60,7 @@
   let particles = [];
 
   function initParticles() {
-    const count = Math.max(36, Math.min(100, Math.floor((width * height) / 17000)));
+    const count = Math.max(46, Math.min(130, Math.floor((width * height) / 13000)));
     particles = new Array(count).fill(0).map(() => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -67,7 +69,7 @@
     }));
   }
 
-  const LINK_DIST = 130;
+  const LINK_DIST = 150;
   const MOUSE_RADIUS = 150;
 
   function draw() {
@@ -100,7 +102,7 @@
         const b = particles[j];
         const dist = Math.hypot(a.x - b.x, a.y - b.y);
         if (dist < LINK_DIST) {
-          const alpha = (1 - dist / LINK_DIST) * 0.22;
+          const alpha = Math.min(1, (1 - dist / LINK_DIST) * 0.22 * alphaMult);
           ctx.strokeStyle = `rgba(${accent2}, ${alpha})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
@@ -115,7 +117,7 @@
       for (const p of particles) {
         const dist = Math.hypot(p.x - mouse.x, p.y - mouse.y);
         if (dist < MOUSE_RADIUS) {
-          const alpha = (1 - dist / MOUSE_RADIUS) * 0.45;
+          const alpha = Math.min(1, (1 - dist / MOUSE_RADIUS) * 0.45 * alphaMult);
           ctx.strokeStyle = `rgba(${accent}, ${alpha})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
@@ -126,10 +128,11 @@
       }
     }
 
+    const dotAlpha = Math.min(1, 0.55 * alphaMult);
     for (const p of particles) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, 1.7, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${accent}, 0.55)`;
+      ctx.fillStyle = `rgba(${accent}, ${dotAlpha})`;
       ctx.fill();
     }
   }
