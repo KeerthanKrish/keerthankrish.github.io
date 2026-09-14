@@ -111,12 +111,32 @@ const cursor = document.getElementById('custom-cursor');
 if (supportsFinePointer && cursor) {
   document.documentElement.classList.add('custom-cursor-active');
 
+  const skipMotion = reduceMotionQuery.matches;
+  const POS_EASE = skipMotion ? 1 : 0.25;
+  const ROT_EASE = skipMotion ? 1 : 0.18;
+  const MOVE_THRESHOLD = 0.4;
+
   let shown = false;
+  let tx = window.innerWidth / 2;
+  let ty = window.innerHeight / 2;
+  let cx = tx;
+  let cy = ty;
+  let angle = 0;
+  let targetAngle = 0;
+
   const interactiveSelector = 'a, button';
 
+  function lerpAngle(a, b, t) {
+    const diff = (((b - a + 180) % 360) + 360) % 360 - 180;
+    return a + diff * t;
+  }
+
   window.addEventListener('mousemove', (e) => {
-    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    tx = e.clientX;
+    ty = e.clientY;
     if (!shown) {
+      cx = tx;
+      cy = ty;
       cursor.style.display = 'block';
       shown = true;
     }
@@ -139,4 +159,22 @@ if (supportsFinePointer && cursor) {
       cursor.classList.remove('is-pointer');
     }
   });
+
+  function frame() {
+    const dx = tx - cx;
+    const dy = ty - cy;
+    cx += dx * POS_EASE;
+    cy += dy * POS_EASE;
+
+    const speed = Math.hypot(dx, dy);
+    targetAngle = speed > MOVE_THRESHOLD ? Math.atan2(dy, dx) * (180 / Math.PI) + 135 : 0;
+    angle = lerpAngle(angle, targetAngle, ROT_EASE);
+
+    if (shown) {
+      cursor.style.transform = `translate(${cx}px, ${cy}px) rotate(${angle}deg)`;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
 }

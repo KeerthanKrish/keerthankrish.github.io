@@ -201,25 +201,44 @@ a:hover {
   position: fixed;
   top: 0;
   left: 0;
-  width: 16px;
-  height: 21px;
-  color: var(--accent);
   z-index: 9999;
   pointer-events: none;
   display: none;
   filter: drop-shadow(0 0 3px rgba(var(--accent-rgb), 0.5));
+  transition: filter 0.15s ease;
 }
 
-.custom-cursor svg {
+.cursor-arrow {
   display: block;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.12s ease, color 0.12s ease;
+  width: 16px;
+  height: 21px;
+  color: var(--accent);
 }
 
-.custom-cursor.is-pointer svg {
-  transform: scale(1.25);
-  color: var(--accent-2);
+.cursor-dot {
+  display: none;
+  width: 20px;
+  height: 20px;
+  fill: var(--accent-2);
+  transform-origin: center;
+  animation: cursor-dot-in 0.15s ease;
+}
+
+@keyframes cursor-dot-in {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+.custom-cursor.is-pointer {
+  filter: drop-shadow(0 0 5px rgba(var(--accent-2-rgb), 0.55));
+}
+
+.custom-cursor.is-pointer .cursor-arrow {
+  display: none;
+}
+
+.custom-cursor.is-pointer .cursor-dot {
+  display: block;
 }
 
 :root.custom-cursor-active,
