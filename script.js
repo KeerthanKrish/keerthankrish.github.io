@@ -71,3 +71,32 @@ if (themeToggle) {
     window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
   });
 }
+
+// Card tilt-on-hover
+const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (!reduceMotionQuery.matches) {
+  const TILT_MAX = 7;
+
+  document.querySelectorAll('.term').forEach((card) => {
+    let frame = null;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rotateY = (x - 0.5) * TILT_MAX * 2;
+      const rotateX = (0.5 - y) * TILT_MAX * 2;
+
+      if (frame) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (frame) cancelAnimationFrame(frame);
+      card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+    });
+  });
+}

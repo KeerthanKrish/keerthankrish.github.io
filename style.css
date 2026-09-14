@@ -21,6 +21,7 @@
   --accent-3: #ff5c9d;
   --danger: #ff5c5c;
   --heading: #ffffff;
+  --glass-rgb: 3, 5, 9;
   --particle-alpha-mult: 1;
   --nav-bg: rgba(10, 14, 20, 0.75);
   --shadow-color: rgba(0, 0, 0, 0.6);
@@ -49,6 +50,7 @@
   --accent-3: #d6316f;
   --danger: #d64545;
   --heading: #0b0f17;
+  --glass-rgb: 255, 255, 255;
   --particle-alpha-mult: 1.7;
   --nav-bg: rgba(244, 246, 250, 0.8);
   --shadow-color: rgba(28, 36, 51, 0.12);
@@ -57,7 +59,6 @@
 
 body,
 .nav,
-.term,
 .badge,
 .tag,
 .stat,
@@ -278,13 +279,17 @@ h2.section-title .muted {
 /* ---------- Terminal window chrome ---------- */
 
 .term {
-  background: rgba(var(--surface-rgb), 0.2);
+  background: rgba(var(--glass-rgb), 0.2);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 20px 60px -20px var(--shadow-color);
+  transform: perspective(900px) rotateX(0deg) rotateY(0deg);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  will-change: transform;
 }
 
 .term-bar {
@@ -292,7 +297,7 @@ h2.section-title .muted {
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: rgba(var(--surface-2-rgb), 0.28);
+  background: rgba(var(--glass-rgb), 0.28);
   border-bottom: 1px solid var(--border);
 }
 
@@ -452,7 +457,7 @@ h2.section-title .muted {
 }
 
 .stat {
-  background: rgba(var(--surface-rgb), 0.2);
+  background: rgba(var(--glass-rgb), 0.2);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   border: 1px solid var(--border);
@@ -606,6 +611,14 @@ footer {
   text-align: center;
   color: var(--text-faint);
   font-size: 12.5px;
+}
+
+.build-version {
+  margin: 6px 0 0;
+  font-size: 11px;
+  color: var(--text-faint);
+  opacity: 0.6;
+  letter-spacing: 0.03em;
 }
 
 /* ---------- Responsive ---------- */
