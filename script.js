@@ -100,6 +100,6 @@ function attachTilt(cards, maxDeg) {
 }
 
 if (!reduceMotionQuery.matches) {
-  attachTilt(document.querySelectorAll('.term'), 11);
-  attachTilt(document.querySelectorAll('.stat'), 10);
+  attachTilt(document.querySelectorAll('.term'), 8);
+  attachTilt(document.querySelectorAll('.stat'), 18);
 }
