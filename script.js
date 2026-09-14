@@ -103,3 +103,40 @@ if (!reduceMotionQuery.matches) {
   attachTilt(document.querySelectorAll('.term'), 8);
   attachTilt(document.querySelectorAll('.stat'), 18);
 }
+
+// Custom cursor
+const supportsFinePointer = window.matchMedia('(pointer: fine)').matches;
+const cursor = document.getElementById('custom-cursor');
+
+if (supportsFinePointer && cursor) {
+  document.documentElement.classList.add('custom-cursor-active');
+
+  let shown = false;
+  const interactiveSelector = 'a, button';
+
+  window.addEventListener('mousemove', (e) => {
+    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    if (!shown) {
+      cursor.style.display = 'block';
+      shown = true;
+    }
+  });
+
+  document.documentElement.addEventListener('mouseleave', () => {
+    cursor.style.display = 'none';
+    shown = false;
+  });
+
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(interactiveSelector)) {
+      cursor.classList.add('is-pointer');
+    }
+  });
+
+  document.addEventListener('mouseout', (e) => {
+    const stillInside = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(interactiveSelector);
+    if (e.target.closest(interactiveSelector) && !stillInside) {
+      cursor.classList.remove('is-pointer');
+    }
+  });
+}

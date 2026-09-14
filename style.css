@@ -123,6 +123,75 @@ a:hover {
   z-index: 1;
 }
 
+/* ---------- Boot sequence ---------- */
+
+.boot-sequence {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vw;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.boot-sequence.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.boot-lines {
+  max-width: 640px;
+}
+
+.boot-line {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.boot-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 8vw;
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+/* ---------- Custom cursor ---------- */
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 9px;
+  height: 17px;
+  background: var(--accent);
+  z-index: 9999;
+  pointer-events: none;
+  display: none;
+  animation: blink 1s step-start infinite;
+}
+
+.custom-cursor.is-pointer {
+  width: 22px;
+  height: 22px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  animation: none;
+}
+
+:root.custom-cursor-active,
+:root.custom-cursor-active * {
+  cursor: none !important;
+}
+
 /* ---------- Theme toggle ---------- */
 
 .theme-toggle {

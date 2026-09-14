@@ -22,6 +22,14 @@
 </head>
 <body>
 
+  <div id="boot-sequence" class="boot-sequence" aria-hidden="true">
+    <div class="boot-lines" id="boot-lines"></div>
+    <p class="boot-hint">press any key to skip</p>
+  </div>
+  <script src="boot.js"></script>
+
+  <div id="custom-cursor" class="custom-cursor" aria-hidden="true"></div>
+
   <canvas id="bg-canvas"></canvas>
 
   <div class="page">
@@ -270,7 +278,7 @@
   <footer>
     <div class="wrap">
       <p>&copy; <span id="year"></span> Keerthan Krish. Built with HTML, CSS &amp; JS — hosted on GitHub Pages.</p>
-      <p class="build-version">build v4</p>
+      <p class="build-version">build v5</p>
     </div>
   </footer>
 
