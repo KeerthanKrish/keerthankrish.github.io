@@ -59,6 +59,17 @@
 
   <div id="cursor-trail" class="cursor-trail" aria-hidden="true"></div>
 
+  <div id="brick-game" class="brick-game" aria-hidden="true">
+    <div class="brick-game-hud">
+      <span id="brick-score">Score: 0</span>
+      <span id="brick-lives">Lives: 3</span>
+      <span class="brick-hint">esc to return &middot; mouse or &larr;&rarr; to move</span>
+    </div>
+    <canvas id="brick-canvas"></canvas>
+    <div id="brick-message" class="brick-message"></div>
+  </div>
+  <script src="game.js"></script>
+
   <canvas id="bg-canvas"></canvas>
 
   <div class="page">
@@ -350,7 +361,7 @@
   <footer>
     <div class="wrap">
       <p>&copy; <span id="year"></span> Keerthan Krish.</p>
-      <p class="build-version">build v12</p>
+      <p class="build-version">build v13</p>
     </div>
   </footer>
 

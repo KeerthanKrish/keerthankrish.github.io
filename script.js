@@ -220,6 +220,7 @@ if (!reduceMotionQuery.matches) {
   const burstSkipSelector = 'a, button';
 
   document.addEventListener('click', (e) => {
+    if (window.__brickGameActive) return;
     if (e.target.closest(burstSkipSelector)) return;
 
     const originX = e.clientX;
