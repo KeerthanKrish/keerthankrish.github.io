@@ -112,7 +112,6 @@ if (supportsFinePointer && cursor) {
   document.documentElement.classList.add('custom-cursor-active');
 
   const skipMotion = reduceMotionQuery.matches;
-  const POS_EASE = skipMotion ? 1 : 0.25;
 
   let shown = false;
   let tx = window.innerWidth / 2;
@@ -180,8 +179,8 @@ if (supportsFinePointer && cursor) {
   }
 
   function frame() {
-    cx += (tx - cx) * POS_EASE;
-    cy += (ty - cy) * POS_EASE;
+    cx = tx;
+    cy = ty;
 
     if (shown) {
       cursor.style.transform = `translate(${cx}px, ${cy}px)`;

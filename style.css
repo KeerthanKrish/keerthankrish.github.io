@@ -746,6 +746,66 @@ h2.section-title .muted {
   color: var(--accent);
 }
 
+/* ---------- Experience ---------- */
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 640px;
+}
+
+.experience-item {
+  position: relative;
+  padding-left: 22px;
+  border-left: 2px solid var(--border);
+}
+
+.experience-item::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.experience-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.experience-role {
+  margin: 0;
+  color: var(--heading);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.experience-dates {
+  color: var(--text-faint);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.experience-company {
+  margin: 4px 0 10px;
+  color: var(--accent);
+  font-size: 13.5px;
+}
+
+.experience-desc {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 13.5px;
+}
+
 /* ---------- Contact ---------- */
 
 .contact-term .term-body {
