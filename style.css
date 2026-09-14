@@ -219,9 +219,10 @@ a:hover {
   display: none;
   width: 20px;
   height: 20px;
-  fill: var(--accent-2);
+  fill: var(--accent);
   transform-origin: center;
   animation: cursor-dot-in 0.15s ease;
+  transition: fill 0.1s ease;
 }
 
 @keyframes cursor-dot-in {
@@ -230,7 +231,7 @@ a:hover {
 }
 
 .custom-cursor.is-pointer {
-  filter: drop-shadow(0 0 5px rgba(var(--accent-2-rgb), 0.55));
+  filter: drop-shadow(0 0 5px rgba(var(--accent-rgb), 0.55));
 }
 
 .custom-cursor.is-pointer .cursor-arrow {
@@ -239,6 +240,14 @@ a:hover {
 
 .custom-cursor.is-pointer .cursor-dot {
   display: block;
+}
+
+.custom-cursor.is-on-green .cursor-dot {
+  fill: #050505;
+}
+
+.custom-cursor.is-on-green {
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.45));
 }
 
 .cursor-trail {

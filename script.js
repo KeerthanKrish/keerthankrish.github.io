@@ -138,9 +138,14 @@ if (supportsFinePointer && cursor) {
     shown = false;
   });
 
+  const greenBgSelector = '.btn-primary';
+
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(interactiveSelector)) {
       cursor.classList.add('is-pointer');
+    }
+    if (e.target.closest(greenBgSelector)) {
+      cursor.classList.add('is-on-green');
     }
   });
 
@@ -149,13 +154,20 @@ if (supportsFinePointer && cursor) {
     if (e.target.closest(interactiveSelector) && !stillInside) {
       cursor.classList.remove('is-pointer');
     }
+    const stillOnGreen = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(greenBgSelector);
+    if (e.target.closest(greenBgSelector) && !stillOnGreen) {
+      cursor.classList.remove('is-on-green');
+    }
   });
 
   // Trailing pixel dots
   const trailEl = document.getElementById('cursor-trail');
-  const TRAIL_LENGTH = skipMotion ? 0 : 8;
+  const TRAIL_LENGTH = skipMotion ? 0 : 6;
+  const SAMPLE_DIST = 10;
   const trailHistory = [];
   const trailDots = [];
+  let lastSampleX = cx;
+  let lastSampleY = cy;
 
   if (trailEl && TRAIL_LENGTH > 0) {
     for (let i = 0; i < TRAIL_LENGTH; i++) {
@@ -175,8 +187,12 @@ if (supportsFinePointer && cursor) {
       cursor.style.transform = `translate(${cx}px, ${cy}px)`;
 
       if (TRAIL_LENGTH > 0) {
-        trailHistory.unshift({ x: cx, y: cy });
-        if (trailHistory.length > TRAIL_LENGTH) trailHistory.length = TRAIL_LENGTH;
+        if (Math.hypot(cx - lastSampleX, cy - lastSampleY) > SAMPLE_DIST) {
+          trailHistory.unshift({ x: lastSampleX, y: lastSampleY });
+          if (trailHistory.length > TRAIL_LENGTH) trailHistory.length = TRAIL_LENGTH;
+          lastSampleX = cx;
+          lastSampleY = cy;
+        }
 
         trailDots.forEach((dot, i) => {
           const point = trailHistory[i];
